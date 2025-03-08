@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "dvcs-ui/headers/mainwindow.h"
 #include <QApplication>
 #include <QFile>
 #include <QDir>
@@ -26,6 +26,11 @@ bool copySelfToLocation(const QString& targetPath) {
                           QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup | QFile::ExeOther |
                               QFile::WriteOwner | QFile::ReadOwner |
                               QFile::WriteUser | QFile::ReadUser);
+    QDir targetDir(targetPath);
+    if(!targetDir.mkpath("repositorykeeper")) {
+        qCritical() << "Failed to create repositorykeeper directory in:" << targetPath;
+        return false;
+    }
 
     return true;
 }
@@ -35,7 +40,7 @@ int main(int argc, char *argv[])
 \
     bool guiMode = false;
     bool installationMode = false;
-    QString targetDir = "C:/";
+    QString targetDir = "C:/DVCS";
 
     for(int i = 1; i < argc; ++i) {
         if(strcmp(argv[i], "--move") == 0 || strcmp(argv[i], "-m") == 0) {
