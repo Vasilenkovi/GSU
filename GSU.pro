@@ -10,13 +10,24 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    $$PWD\dvcs-ui\sources\mainwindow.cpp \
+    $$PWD\VCS\sources\Branch.cpp \
+    $$PWD\VCS\sources\repositorykeeper.cpp \
+    $$PWD\VCS\sources\DVCSManager.cpp \
+    $$PWD\UTILS\sources\Message.cpp \
+    $$PWD\VCS\sources\Commit.cpp
 
 HEADERS += \
-    mainwindow.h
+    $$PWD\dvcs-ui\headers\mainwindow.h \
+    $$PWD\VCS\headers\Branch.h \
+    $$PWD\VCS\headers\repositorykeeper.h \
+    $$PWD\VCS\headers\DVCSManager.h \
+    $$PWD\UTILS\headers\Message.h \
+    $$PWD\VCS\headers\Commit.h \
+    $$PWD\UTILS\dirUtils.h
 
 FORMS += \
-    mainwindow.ui
+    $$PWD\dvcs-ui\forms\mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
