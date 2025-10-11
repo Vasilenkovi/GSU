@@ -11,15 +11,20 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     $$PWD\dvcs-ui\sources\mainwindow.cpp \
-    $$PWD\repository-keeper\sources\repository.cpp \
-    $$PWD\repository-keeper\sources\repositorykeeper.cpp \
-    $$PWD\repository-keeper\sources\repositorymanager.cpp
+    $$PWD\VCS\sources\Branch.cpp \
+    $$PWD\VCS\sources\repositorykeeper.cpp \
+    $$PWD\VCS\sources\DVCSManager.cpp \
+    $$PWD\UTILS\sources\Message.cpp \
+    $$PWD\VCS\sources\Commit.cpp
 
 HEADERS += \
     $$PWD\dvcs-ui\headers\mainwindow.h \
-    $$PWD\repository-keeper\headers\repository.h \
-    $$PWD\repository-keeper\headers\repositorykeeper.h \
-    $$PWD\repository-keeper\headers\repositorymanager.h
+    $$PWD\VCS\headers\Branch.h \
+    $$PWD\VCS\headers\repositorykeeper.h \
+    $$PWD\VCS\headers\DVCSManager.h \
+    $$PWD\UTILS\headers\Message.h \
+    $$PWD\VCS\headers\Commit.h \
+    $$PWD\UTILS\dirUtils.h
 
 FORMS += \
     $$PWD\dvcs-ui\forms\mainwindow.ui
