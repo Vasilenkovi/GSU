@@ -1,7 +1,7 @@
 #ifndef BRANCH_H
 #define BRANCH_H
 #include "Commit.h"
-#include "UTILS/headers/Message.h"
+#include "Message.h"
 #include <string>
 #include <vector>
 #include <map>

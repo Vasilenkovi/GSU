@@ -7,7 +7,7 @@
 #include <QFile>
 #include <QDataStream>
 #include <utility>
-#include "UTILS/headers/Message.h"
+#include "Message.h"
 #include "Branch.h"
 #include "Commit.h"
 
@@ -39,7 +39,8 @@ private:
 public:
     Message RepositoryKeeper( std::string& repositoryPath); // check repository service files
     Message checkEnv();
-    Message acceptCommand( std::string& command, std::map<char, std::string> flags); // accepts command and invokes one of the methods to handle it, returns message with the status
+    Message acceptCommand( std::string& command, std::map<char, std::string> flags);
+    // accepts command and invokes one of the methods to handle it, returns message with the status
     Commit stageChanges( std::string& description);
     Message makeBranch( std::string& name);
     Message switchToBranch( std::string& name);

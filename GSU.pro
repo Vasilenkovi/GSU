@@ -1,35 +1,23 @@
-QT       += core gui
+TEMPLATE = subdirs
+CONFIG += ordered
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+# Список модулей (подпроектов)
+SUBDIRS = \
+    UTILS \
+    ChangesCatcher \
+    RepositoryManager \
+    DistNet \
+    DistNetBeacon \
+    SyncHead \
+    UI \
+    tests
 
-CONFIG += c++17
+SOURCES = main.cpp
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-SOURCES += \
-    main.cpp \
-    $$PWD\dvcs-ui\sources\mainwindow.cpp \
-    $$PWD\VCS\sources\Branch.cpp \
-    $$PWD\VCS\sources\repositorykeeper.cpp \
-    $$PWD\VCS\sources\DVCSManager.cpp \
-    $$PWD\UTILS\sources\Message.cpp \
-    $$PWD\VCS\sources\Commit.cpp
-
-HEADERS += \
-    $$PWD\dvcs-ui\headers\mainwindow.h \
-    $$PWD\VCS\headers\Branch.h \
-    $$PWD\VCS\headers\repositorykeeper.h \
-    $$PWD\VCS\headers\DVCSManager.h \
-    $$PWD\UTILS\headers\Message.h \
-    $$PWD\VCS\headers\Commit.h \
-    $$PWD\UTILS\dirUtils.h
-
-FORMS += \
-    $$PWD\dvcs-ui\forms\mainwindow.ui
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+UTILS.depends =
+ChangesCatcher.depends = UTILS
+RepositoryManager.depends = UTILS
+DistNet.depends = UTILS
+DistNetBeacon.depends = UTILS DistNet
+SyncHead.depends = UTILS RepositoryManager DistNet ChangesCatcher
+UI.depends = UTILS ChangesCatcher RepositoryManager DistNet DistNetBeacon SyncHead
