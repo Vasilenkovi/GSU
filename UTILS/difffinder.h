@@ -2,6 +2,7 @@
 #define DIFFFINDER_H
 #include <xdelta3.h>
 #include "Message.h"
+#include <vector>
 #include <stdint.h>
 namespace UTILS {
 
