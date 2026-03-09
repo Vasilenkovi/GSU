@@ -17,13 +17,20 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y qtbase5-dev qt5-qmake build-essential wget pkgconf liblzma-dev
+        sudo apt-get install -y \
+          qtbase5-dev qt5-qmake build-essential wget pkgconf liblzma-dev autoconf automake libtool
 
     - name: Build xdelta3 from source
       run: |
         wget https://github.com/jmacd/xdelta-gpl/archive/refs/tags/v3.0.11.tar.gz -O xdelta3-3.0.11.tar.gz
         tar xvf xdelta3-3.0.11.tar.gz
         cd xdelta-gpl-3.0.11/xdelta3
+
+        # Генерируем configure и Makefile
+        ./autogen.sh
+
+        # Собираем и устанавливаем
+        ./configure
         make
         sudo make install
 
