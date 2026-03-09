@@ -19,10 +19,11 @@ jobs:
 
     - name: Install xdelta3 and build library
       run: |
-        sudo apt-get install -y xdelta3
-        wget https://github.com/jmacd/xdelta/releases/download/3.1.0/xdelta3-3.1.0.tar.gz
-        tar xvf xdelta3-3.1.0.tar.gz
-        cd xdelta3-3.1.0
+        sudo apt-get update
+        sudo apt-get install -y build-essential wget liblzma-dev pkgconf
+        wget https://github.com/jmacd/xdelta-gpl/archive/refs/tags/v3.0.11.tar.gz -O xdelta3-3.0.11.tar.gz
+        tar xvf xdelta3-3.0.11.tar.gz
+        cd xdelta-gpl-3.0.11
         ./configure
         make
         sudo make install
