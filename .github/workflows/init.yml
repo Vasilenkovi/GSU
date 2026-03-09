@@ -14,8 +14,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y qtbase5-dev qt5-qmake libxdelta3-dev
+    - name: Install Qt dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y qtbase5-dev qt5-qmake build-essential wget
+
+    - name: Build and install xdelta3 from source
+      run: |
+        wget https://raw.githubusercontent.com/jmacd/xdelta/master/xdelta3/xdelta3.c
+        wget https://raw.githubusercontent.com/jmacd/xdelta/master/xdelta3/xdelta3.h
+        sudo cp xdelta3.h /usr/local/include/
+        gcc -c xdelta3.c -o xdelta3.o
+        ar rcs libxdelta3.a xdelta3.o
+        sudo cp libxdelta3.a /usr/local/lib/
+        sudo ldconfig
 
     - name: Build Utils library
       run: |
