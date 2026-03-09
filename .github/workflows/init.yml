@@ -14,17 +14,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install basic deps
-      run: sudo apt-get update && sudo apt-get install -y qtbase5-dev qt5-qmake build-essential wget pkgconf
-
-    - name: Install xdelta3 and build library
+    - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential wget liblzma-dev pkgconf
+        sudo apt-get install -y qtbase5-dev qt5-qmake build-essential wget pkgconf liblzma-dev
+
+    - name: Build xdelta3 from source
+      run: |
         wget https://github.com/jmacd/xdelta-gpl/archive/refs/tags/v3.0.11.tar.gz -O xdelta3-3.0.11.tar.gz
         tar xvf xdelta3-3.0.11.tar.gz
-        cd xdelta-gpl-3.0.11
-        ./configure
+        cd xdelta-gpl-3.0.11/xdelta3
         make
         sudo make install
 
