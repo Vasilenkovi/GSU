@@ -12,9 +12,9 @@ namespace UTILS {
     public:
         VersionsChain(std::string pathToChainHeader);
         Message newHead(std::string commitID); //add commit
-        Message getVersion(std::string commitID); // reasembles files in repository to a given state
+        std::pair<Message, std::vector<uint8_t>> getVersion(std::string commitID); // reasembles files in repository to a given state
         Message removeVersion(std::string commitID); //removes given commit and makes its parent head
-        Message getHeadVersion(); //reasembles files in repository to the head state
+        std::pair<Message, std::vector<uint8_t>> getHeadVersion(); //reasembles files in repository to the head state
         Message restoreCommit(std::string commitID, const std::string& projectPath);
     private:
         std::string TAIL_PATH;
