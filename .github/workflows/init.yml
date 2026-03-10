@@ -31,17 +31,17 @@ jobs:
           fakeroot \
           wget
 
-    - name: Download xdelta3 source
-      run: |
-        mkdir xdelta-build
-        cd xdelta-build
-        apt-get source xdelta3
-
     - name: Build and install xdelta3
       run: |
-        cd xdelta-build/xdelta3-*
-        dpkg-buildpackage -uc -us -b
-        sudo dpkg -i ../xdelta3_*.deb
+        git clone https://github.com/jmacd/xdelta.git
+        cd xdelta/xdelta3
+        # Generate build files using autotools
+        ./bootstrap  # or: libtoolize && aclocal -I m4 && autoheader && automake --add-missing && autoconf
+        # Configure and build
+        ./configure --prefix=/usr/local
+        make -j$(nproc)
+        # Install
+        sudo make install
 
     - name: Build Utils library
       run: |
