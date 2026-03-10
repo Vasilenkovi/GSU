@@ -5,11 +5,15 @@ TARGET = Utils
 QT += core
 CONFIG += c++17
 
-# Определения для xdelta3 (под Windows 64-bit)
 DEFINES += SIZEOF_SIZE_T=8 SIZEOF_UNSIGNED_LONG_LONG=8 _WIN32_WINNT=0x0601
 
-# Путь к заголовкам xdelta3
+linux: DEFINES += _LARGEFILE64_SOURCE _FILE_OFFSET_BITS=64
+
 INCLUDEPATH += $$PWD/../include/xdelta3/xdelta3
+
+!exists($$PWD/../include/xdelta3/xdelta3/xdelta3.c) {
+    error("xdelta3.c not found at $$PWD/../include/xdelta3/xdelta3/xdelta3.c")
+}
 
 HEADERS += \
     Message.h \
