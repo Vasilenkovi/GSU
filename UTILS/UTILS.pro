@@ -5,6 +5,9 @@ TARGET = Utils
 QT += core
 CONFIG += c++17
 
+# Путь к заголовкам xdelta3
+INCLUDEPATH += $$PWD/../third_party/xdelta3
+
 HEADERS += \
     Message.h \
     difffinder.h \
@@ -14,10 +17,5 @@ HEADERS += \
 SOURCES += \
     Commit.cpp \
     difffinder.cpp \
-    versionschain.cpp
-
-exists(../conanbuildinfo.pri) {
-    include(../conanbuildinfo.pri)
-    INCLUDEPATH += $$CONAN_INCLUDEPATHS
-    LIBS += $$CONAN_LIBPATH $$CONAN_LIBS
-}
+    versionschain.cpp \
+    $$PWD/../third_party/xdelta3/xdelta3.c
