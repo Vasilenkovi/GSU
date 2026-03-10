@@ -14,13 +14,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Enable source repositories
-      run: |
-        sudo sed -i 's/^# deb-src/deb-src/' /etc/apt/sources.list
-        sudo apt-get update
-
     - name: Install build dependencies
       run: |
+        sudo apt-get update
         sudo apt-get install -y \
           build-essential \
           debhelper \
@@ -36,10 +32,12 @@ jobs:
 
     - name: Build and install xdelta3
       run: |
-        git clone https://github.com/jmacd/xdelta.git
-        cd xdelta/xdelta3
+        wget https://github.com/jmacd/xdelta/archive/refs/tags/v3.1.0.tar.gz
+        tar -xzvf v3.1.0.tar.gz
+        cd xdelta-3.1.0
+        cd xdelta3
         # Generate build files using autotools
-        ./generate_build_files.sh
+        autoreconf -fvi
         ./configure
         make
         sudo make install
