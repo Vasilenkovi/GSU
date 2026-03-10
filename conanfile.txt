@@ -1,0 +1,8 @@
+[requires]
+bsdiff/4.3
+
+[generators]
+qmake
+
+[options]
+bsdiff:shared=False   # статическая библиотека

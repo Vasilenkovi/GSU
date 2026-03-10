@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <QDir>
 #include <QDebug>
-#include "VCS/headers/DVCSManager.h"
+#include "DVCSManager.h"
 #include "UTILS/dirUtils.h"
 
 DVCSManager::DVCSManager(std::string installationPath) {
