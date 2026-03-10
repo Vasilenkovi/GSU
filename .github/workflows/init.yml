@@ -29,18 +29,19 @@ jobs:
           qt5-qmake \
           liblzma-dev \
           fakeroot \
-          wget
+          wget \
+          automake \
+          autoconf \
+          libtool
 
     - name: Build and install xdelta3
       run: |
         git clone https://github.com/jmacd/xdelta.git
         cd xdelta/xdelta3
         # Generate build files using autotools
-        ./bootstrap  # or: libtoolize && aclocal -I m4 && autoheader && automake --add-missing && autoconf
-        # Configure and build
-        ./configure --prefix=/usr/local
-        make -j$(nproc)
-        # Install
+        ./generate_build_files.sh
+        ./configure
+        make
         sudo make install
 
     - name: Build Utils library
