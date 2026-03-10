@@ -44,10 +44,13 @@ private:
 public:
     // Constructor – all parameters are mandatory
     Message(std::string ResponseTo, std::string Producer, std::string messageType)
-        : ResponseTo(ResponseTo),
+        : status(false),
         ProducerName(Producer),
-        status(false),
+        ResponseTo(ResponseTo),
         StatusCode(statusMaps::STATUS_OK),
+        Reason(),
+        Details(),
+        Advice(),
         messageType(messageType)
     {}
 

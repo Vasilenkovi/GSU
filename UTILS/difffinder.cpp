@@ -1,5 +1,7 @@
 #include "difffinder.h"
-#include <xdelta3.h>
+extern "C" {
+    #include "xdelta3.h"
+}
 #include <vector>
 
 namespace UTILS {

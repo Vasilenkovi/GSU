@@ -15,7 +15,7 @@ private:
     UTILS::VersionsChain currentChain;
     bool compareCheck (); //checks if there is a change in comparison with version from chain
 public:
-    ChangeCatcher(std::string path, UTILS::VersionsChain chain) : pathToProject(path), currentChain(chain);
+    ChangeCatcher(std::string path, UTILS::VersionsChain chain);
     std::pair <UTILS::Message, UTILS::Commit> generateCommit();
     ~ChangeCatcher();
 };

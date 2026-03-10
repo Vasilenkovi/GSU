@@ -4,7 +4,9 @@
 #include <sstream>
 #include <deque>
 #include <algorithm>
-#include <xdelta3.h>
+extern "C" {
+    #include "xdelta3.h"
+}
 
 namespace UTILS {
 
@@ -166,7 +168,7 @@ Message VersionsChain::restoreCommit(std::string commitID, const std::string& pr
         if (loadMsg.getStatusCode() != statusMaps::STATUS_OK) {
             return loadMsg;
         }
-        current = commit.parentID;
+        current = commit.getParentID();
     }
 
     // Выбираем коммиты до целевого включительно
@@ -203,9 +205,9 @@ Message VersionsChain::restoreCommit(std::string commitID, const std::string& pr
         if (loadMsg.getStatusCode() != statusMaps::STATUS_OK) {
             return loadMsg;
         }
-        for (const auto& [fname, delta] : commit.filesDiffs) {
+        for (const auto& [fname, delta] : commit.getFilesDiffs()) {
             std::string filePath = projectPath + "/" + fname;
-            if (commit.parentID.empty()) {
+            if (commit.getParentID().empty()) {
                 // Первый коммит: полный файл
                 std::ofstream outFile(filePath, std::ios::binary);
                 outFile.write(reinterpret_cast<const char*>(delta.data()), delta.size());
@@ -270,7 +272,7 @@ Message VersionsChain::removeVersion(std::string commitID) {
         if (loadMsg.getStatusCode() != statusMaps::STATUS_OK) {
             return loadMsg;
         }
-        current = commit.parentID;
+        current = commit.getParentID();
     }
 
     auto it = std::find(chain.begin(), chain.end(), commitID);

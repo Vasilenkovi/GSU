@@ -4,12 +4,12 @@ CONFIG += ordered
 # Список модулей (подпроектов)
 SUBDIRS = \
     UTILS \
-    ChangesCatcher \
-    RepositoryManager \
-    DistNet \
-    DistNetBeacon \
-    SyncHead \
-    UI \
+    #ChangesCatcher \
+    #RepositoryManager \
+    #DistNet \
+    #DistNetBeacon \
+    #SyncHead \
+    #UI \
     tests
 
 SOURCES = main.cpp

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include <filesystem>
+#include <fstream>
 #include "Commit.h"
 #include "difffinder.h"
 

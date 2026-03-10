@@ -5,6 +5,7 @@
 #include <map>
 #include <fstream>
 #include "Message.h"
+#include "Commit.h"
 #include <stdint.h>
 namespace UTILS {
     class VersionsChain

@@ -30,6 +30,8 @@ namespace UTILS {
         std::string getID() { return commitID; }
         // list of changes
         std::vector<std::string> getChangedFiles();
+        std::string getParentID() const { return parentID; }
+        const std::map<std::string, std::vector<uint8_t>>& getFilesDiffs() const { return filesDiffs; }
     };
 }
 #endif // COMMIT_H
