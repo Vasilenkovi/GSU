@@ -38,7 +38,7 @@ jobs:
         cd xdelta3
         # Generate build files using autotools
         autoreconf -fvi
-        ./configure
+        ./configure --prefix=/usr/local
         make
         sudo make install
 
