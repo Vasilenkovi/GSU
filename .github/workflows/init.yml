@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: [main, master, develop]
+    branches: [ main, master, develop ]
   pull_request:
-    branches: [main, master]
+    branches: [ main, master ]
 
 jobs:
   build:
@@ -14,33 +14,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install build dependencies
+    - name: Install Qt and dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y \
-          build-essential \
-          debhelper \
-          dh-autoreconf \
-          qtbase5-dev \
-          qt5-qmake \
-          liblzma-dev \
-          fakeroot \
-          wget \
-          automake \
-          autoconf \
-          libtool
+        sudo apt-get install -y qtbase5-dev qt5-qmake build-essential python3-pip
 
-    - name: Build and install xdelta3
-      run: |
-        wget https://github.com/jmacd/xdelta/archive/refs/tags/v3.1.0.tar.gz
-        tar -xzvf v3.1.0.tar.gz
-        cd xdelta-3.1.0
-        cd xdelta3
-        # Generate build files using autotools
-        autoreconf -fvi
-        ./configure --prefix=/usr/local
-        make
-        sudo make install
+    - name: Install Conan
+      run: pip3 install conan
+
+    - name: Configure Conan profile
+      run: conan profile detect
+
+    - name: Install dependencies via Conan
+      run: conan install . --build=missing
 
     - name: Build Utils library
       run: |

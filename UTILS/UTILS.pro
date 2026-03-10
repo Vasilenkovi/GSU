@@ -16,4 +16,8 @@ SOURCES += \
     difffinder.cpp \
     versionschain.cpp
 
-LIBS += -lxdelta3
+exists(../conanbuildinfo.pri) {
+    include(../conanbuildinfo.pri)
+    INCLUDEPATH += $$CONAN_INCLUDEPATHS
+    LIBS += $$CONAN_LIBPATH $$CONAN_LIBS
+}
