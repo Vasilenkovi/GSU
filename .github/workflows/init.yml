@@ -10,15 +10,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code with submodules
+    - name: Checkout code
       uses: actions/checkout@v4
       with:
-        submodules: true
+        submodules: recursive
 
-    - name: Install Qt
+    - name: Initialize and update submodules
+      run: |
+        git submodule update --init --recursive
+
+    - name: Verify HDiffPatch submodule
+      run: |
+        ls -la include/HDiffPatch/libHDiffPatch/HDiff/diff.h || exit 1
+
+    - name: Install build dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y qtbase5-dev qt5-qmake build-essential
+        sudo apt-get install -y qtbase5-dev qt5-qmake build-essential git
 
     - name: Build Utils library
       run: |
