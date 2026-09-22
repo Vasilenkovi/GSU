@@ -1,41 +1,21 @@
-#include "UTILS/headers/Message.h"
-#include <filesystem>
-#include <QDir>
+#ifndef DIRUTILS_H
+#define DIRUTILS_H
+
+#include "Message.h"
 #include <string>
 #include <vector>
 
-namespace dirUtils
-{
+namespace UTILS {
 
-std::string getCurrentPath()
-{
-    return QDir::currentPath().toStdString();
-}
+class dirUtils {
+public:
+    // Checks if all files in the list exist in the specified directory
+    static Message checkFiles(const std::vector<std::string>& files, 
+                              const std::string& caller, 
+                              const std::string& directory, 
+                              int defaultStatus = statusMaps::STATUS_OK);
+};
 
-Message checkFiles(std::vector<std::string> files, std::string Producer, std::string checkDir, int statusOnFail)
-{
-    /*
-     * checks if <files> exists in <checkDir> and creates <Message>
-    */
-    Message msg("checkFiles", Producer);
-    for (const auto& filename : files)
-    {
-        std::filesystem::path filePath = std::filesystem::path(checkDir) / filename;
+} // namespace UTILS
 
-        if (!std::filesystem::exists(filePath))
-        {
-            msg.setStatus(statusOnFail);
-
-            // Append missing file info to Details
-            std::string currentDetails = msg.getDict()["Details"];
-            if (!currentDetails.empty())
-                currentDetails += "; ";
-            currentDetails += filename + " not found";
-            msg.setDetails(currentDetails);
-            msg.setReason("Missing required file(s)");
-            msg.setBooleanStatus(false);
-        }
-    }
-    return msg;
-}
-}
+#endif // DIRUTILS_H
