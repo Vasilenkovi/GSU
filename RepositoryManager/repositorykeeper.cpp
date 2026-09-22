@@ -1,3 +1,6 @@
 #include "repositorykeeper.h"
 
-RepositoryKeeper::RepositoryKeeper() {}
+RepositoryKeeper::RepositoryKeeper(std::string& repositoryPath) {
+    // Constructor implementation
+    this->pathToRepository = repositoryPath;
+}

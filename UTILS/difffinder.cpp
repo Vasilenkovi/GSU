@@ -1,8 +1,5 @@
 #include "difffinder.h"
-extern "C" {
-    #include "xdelta3.h"
-}
-#include <vector>
+#include "libHDiffPatch/HDiff/diff.h"  // HDiffPatch library
 
 namespace UTILS {
 
@@ -14,27 +11,19 @@ std::vector<uint8_t> DiffFinder::findDiff() {
         return {}; // There will be a Message
     }
 
-    size_t old_size = oldContent->size();
-    size_t new_size = newContent->size();
+    std::vector<unsigned char> out_diff;
+    
+    // Create compressed diff between old and new data
+    // newData first, then oldData (HDiffPatch convention)
+    // Using create_single_compressed_diff - recommended approach
+    create_single_compressed_diff(
+        newContent->data(), newContent->data() + newContent->size(),
+        oldContent->data(), oldContent->data() + oldContent->size(),
+        out_diff
+    );
 
-    // Maybe later i'll do some trickery with dynamic memory allocation if i ever fell risky
-    std::vector<uint8_t> delta;
-    delta.resize(old_size + new_size + 1024);
-    size_t delta_size = delta.size();
-
-    int ret = xd3_encode_memory(
-        newContent->data(), new_size,
-        oldContent->data(), old_size,
-        delta.data(), &delta_size,
-        delta.size(), 0);
-
-    if (ret != 0) {
-        // There will be a Message
-        return {};
-    }
-
-    delta.resize(delta_size);
-    return delta;
+    // Convert to std::vector<uint8_t>
+    return std::vector<uint8_t>(out_diff.begin(), out_diff.end());
 }
 
 } // namespace UTILS

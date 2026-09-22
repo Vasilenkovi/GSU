@@ -4,9 +4,8 @@
 #include <sstream>
 #include <deque>
 #include <algorithm>
-extern "C" {
-    #include "xdelta3.h"
-}
+#include "libHDiffPatch/HPatch/patch.h"  // HDiffPatch library
+#include "libHDiffPatch/HPatch/patch_types.h"  // for hpatch_singleCompressedDiffInfo
 
 namespace UTILS {
 
@@ -221,20 +220,43 @@ Message VersionsChain::restoreCommit(std::string commitID, const std::string& pr
                     oldData.resize(size);
                     inFile.read(reinterpret_cast<char*>(oldData.data()), size);
                 }
-                std::vector<uint8_t> newData;
-                newData.resize(oldData.size() + delta.size() + 1024);
-                size_t newSize = newData.size();
-                int ret = xd3_decode_memory(
-                    delta.data(), delta.size(),
-                    oldData.data(), oldData.size(),
-                    newData.data(), &newSize,
-                    newData.size(), 0);
-                if (ret != 0) {
+
+                // Get info from compressed diff to know the new data size
+                hpatch_singleCompressedDiffInfo diffInfo;
+                hpatch_BOOL infoResult = getSingleCompressedDiffInfo_mem(
+                    &diffInfo,
+                    delta.data(), delta.data() + delta.size()
+                );
+                
+                if (!infoResult) {
+                    msg.setStatus(statusMaps::FAILURE);
+                    msg.setReason("Failed to read diff info for " + fname);
+                    return msg;
+                }
+                
+                // Allocate buffer for new data
+                size_t newDataSize = static_cast<size_t>(diffInfo.newDataSize);
+                std::vector<unsigned char> tempNewData(newDataSize);
+                
+                // Apply patch: oldData + delta -> newData
+                // Using patch_decompress_mem for compressed diffs
+                // Since we're using create_single_compressed_diff in DiffFinder
+                // decompressPlugin = nullptr means use built-in decompressor
+                hpatch_BOOL result = patch_decompress_mem(
+                    tempNewData.data(), tempNewData.data() + tempNewData.size(),
+                    oldData.data(), oldData.data() + oldData.size(),
+                    delta.data(), delta.data() + delta.size(),
+                    nullptr  // decompressPlugin - null for default
+                );
+
+                if (!result) {
                     msg.setStatus(statusMaps::FAILURE);
                     msg.setReason("Failed to apply delta for " + fname);
                     return msg;
                 }
-                newData.resize(newSize);
+
+                // Convert back to uint8_t vector
+                std::vector<uint8_t> newData(tempNewData.begin(), tempNewData.end());
                 std::ofstream outFile(filePath, std::ios::binary);
                 outFile.write(reinterpret_cast<const char*>(newData.data()), newData.size());
             }

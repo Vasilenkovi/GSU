@@ -5,7 +5,7 @@ CONFIG += ordered
 SUBDIRS = \
     UTILS \
     #ChangesCatcher \
-    #RepositoryManager \
+    RepositoryManager \
     #DistNet \
     #DistNetBeacon \
     #SyncHead \
