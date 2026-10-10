@@ -28,7 +28,7 @@ INCLUDEPATH += \
 # libHDiffPatch sources
 SOURCES += \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/diff.cpp \
-    $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/match_block.cpp \
+    $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/match_block.cpp \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/bytes_rle.cpp \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/compress_detect.cpp \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/libdivsufsort/divsufsort.cpp \

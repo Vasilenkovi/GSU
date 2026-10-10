@@ -2,6 +2,7 @@ from conan import ConanFile
 from conan.tools.scm import Git
 from conan.tools.files import copy, rm
 import os
+import shutil
 
 
 class HDiffPatchConan(ConanFile):
@@ -25,7 +26,14 @@ class HDiffPatchConan(ConanFile):
 
     def package(self):
         # Copy entire repository preserving directory structure
-        copy(self, "*", src=self.source_folder, dst=self.package_folder)
+        # Use shutil.copytree to ensure all files and directories are copied
+        for item in os.listdir(self.source_folder):
+            src = os.path.join(self.source_folder, item)
+            dst = os.path.join(self.package_folder, item)
+            if os.path.isdir(src):
+                shutil.copytree(src, dst, dirs_exist_ok=True)
+            else:
+                shutil.copy2(src, dst)
 
     def package_info(self):
         # For header-only usage, but we also provide sources
