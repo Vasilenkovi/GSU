@@ -8,4 +8,4 @@ INCLUDEPATH += $$PWD/../include/HDiffPatch/libHDiffPatch
 
 SOURCES += test_utils.cpp
 
-LIBS += -L$$PWD/../UTILS/release -lUtils
+LIBS += -L$$PWD/../UTILS -lUtils
