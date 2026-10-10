@@ -1,8 +1,9 @@
 [requires]
-bsdiff/4.3
+hdiffpatch/1.0.0
 
 [generators]
-qmake
 
-[options]
-bsdiff:shared=False   # статическая библиотека
+[imports]
+., recipes/*
+
+[layout]

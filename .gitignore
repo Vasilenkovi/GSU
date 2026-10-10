@@ -185,17 +185,27 @@ doxygen/
 *.doxyfile
 
 # =============================================================================
-# Submodule note: HDiffPatch is a submodule, so we keep its .git directory
-# but ignore its build artifacts
+# Conan package manager
 # =============================================================================
 
-# HDiffPatch build artifacts (if built separately)
-include/HDiffPatch/build/
-include/HDiffPatch/*.exe
-include/HDiffPatch/*.so
-include/HDiffPatch/*.dll
-include/HDiffPatch/*.a
-include/HDiffPatch/*.lib
+# Conan cache
+.conan2/
+.conan/
+conan.lock
+conan.log
+conanbuild/
+conanbuildinfo.txt
+conaninfo.txt
+
+# Conan profile files (optional - uncomment if you want to ignore them)
+# *.conan_profile
+
+# =============================================================================
+# Submodule note: HDiffPatch was a submodule, now replaced with Conan
+# =============================================================================
+
+# Old HDiffPatch submodule directory (now managed by Conan)
+include/HDiffPatch/
 
 # =============================================================================
 # End of .gitignore

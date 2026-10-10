@@ -1,3 +1,2 @@
-[submodule "include/HDiffPatch"]
-	path = include/HDiffPatch
-	url = https://github.com/sisong/HDiffPatch.git
+# HDiffPatch dependency is now managed via Conan
+# Old submodule entry removed

@@ -12,16 +12,26 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Install Python
+      uses: actions/setup-python@v4
       with:
-        submodules: recursive
+        python-version: '3.10'
 
-    - name: Initialize and update submodules
-      run: |
-        git submodule update --init --recursive
+    - name: Install Conan
+      run: pip install conan
 
-    - name: Verify HDiffPatch submodule
+    - name: Install HDiffPatch via Conan
       run: |
-        ls -la include/HDiffPatch/libHDiffPatch/HDiff/diff.h || exit 1
+        conan create recipes/hdiffpatch --build=missing
+
+    - name: Deploy HDiffPatch to include directory
+      run: |
+        # Get the package folder from Conan cache
+        PKG_FOLDER=$(conan list hdiffpatch/1.0.0 --format=json | python3 -c "import sys, json; print(json.load(sys.stdin)['hdiffpatch/1.0.0']['package_folder'])")
+        # Copy to expected location
+        mkdir -p include
+        cp -r "$PKG_FOLDER"/* include/HDiffPatch/
 
     - name: Install build dependencies
       run: |
