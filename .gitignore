@@ -197,8 +197,8 @@ conanbuild/
 conanbuildinfo.txt
 conaninfo.txt
 
-# Conan profile files (optional - uncomment if you want to ignore them)
-# *.conan_profile
+# Conan configuration files (tracked in repo)
+!.github/conan/
 
 # =============================================================================
 # Submodule note: HDiffPatch was a submodule, now replaced with Conan

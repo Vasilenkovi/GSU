@@ -1,0 +1,16 @@
+# Conan configuration for GitHub Actions
+# This file can be used to set up Conan profiles and remotes
+
+profiles:
+  - path: profiles/default.yml
+    detect: true
+    append: true
+
+remotes:
+  - name: conancenter
+    url: https://center.conan.io
+    verify_ssl: true
+
+storage:
+  path: ~/.conan2
+  cache: ~/.conan2/p

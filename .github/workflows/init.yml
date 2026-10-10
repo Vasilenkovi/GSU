@@ -21,9 +21,15 @@ jobs:
     - name: Install Conan
       run: pip install conan
 
+    - name: Setup Conan profile
+      run: |
+        mkdir -p ~/.conan2
+        cp .github/conan/conan.yaml ~/.conan2/global.conf
+        conan profile detect --force
+
     - name: Install HDiffPatch via Conan
       run: |
-        conan create recipes/hdiffpatch --build=missing
+        conan create recipes/hdiffpatch --build=missing --profile=.github/conan/profiles/default.yml
 
     - name: Deploy HDiffPatch to include directory
       run: |
