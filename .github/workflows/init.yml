@@ -23,13 +23,12 @@ jobs:
 
     - name: Setup Conan profile
       run: |
-        mkdir -p ~/.conan2
-        cp .github/conan/conan.yaml ~/.conan2/global.conf
-        conan profile detect --force
+        mkdir -p ~/.conan2/profiles
+        cp .github/conan/profiles/default ~/.conan2/profiles/default
+        conan profile detect --force --profile=default
 
     - name: Install HDiffPatch via Conan
-      run: |
-        conan create recipes/hdiffpatch --build=missing --profile=.github/conan/profiles/default.yml
+      run: conan create recipes/hdiffpatch --build=missing --profile=default
 
     - name: Deploy HDiffPatch to include directory
       run: |

@@ -11,9 +11,3 @@ build_type=Release
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja
 tools.build:jobs=2
-
-[options]
-
-[env]
-
-[buildenv]
