@@ -7,7 +7,7 @@
 #include <QFile>
 #include <QDataStream>
 #include <utility>
-#include "UTILS/headers/Message.h"
+#include "Message.h"
 #include "Branch.h"
 #include "Commit.h"
 
@@ -37,16 +37,17 @@ private:
     std::string invokedWithPermissions; // permissions received from manager
     std::pair<std::string, std::string> HEADS; // commit and branch
 public:
-    Message RepositoryKeeper( std::string& repositoryPath); // check repository service files
-    Message checkEnv();
-    Message acceptCommand( std::string& command, std::map<char, std::string> flags); // accepts command and invokes one of the methods to handle it, returns message with the status
-    Commit stageChanges( std::string& description);
-    Message makeBranch( std::string& name);
-    Message switchToBranch( std::string& name);
-    Message deleteBranch( std::string& name);
+    RepositoryKeeper( std::string& repositoryPath); // constructor - check repository service files
+    UTILS::Message checkEnv();
+    UTILS::Message acceptCommand( std::string& command, std::map<char, std::string> flags);
+    // accepts command and invokes one of the methods to handle it, returns message with the status
+    UTILS::Commit stageChanges( std::string& description);
+    UTILS::Message makeBranch( std::string& name);
+    UTILS::Message switchToBranch( std::string& name);
+    UTILS::Message deleteBranch( std::string& name);
     std::string blame( std::string& repositoryName);
-    Message switchToVersion( std::string& versionID);
-    Message deleteCommit( std::string& commitID);
+    UTILS::Message switchToVersion( std::string& versionID);
+    UTILS::Message deleteCommit( std::string& commitID);
 };
 
 #endif // REPOSITORYKEEPER_H

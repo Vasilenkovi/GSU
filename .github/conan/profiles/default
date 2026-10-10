@@ -1,0 +1,13 @@
+# Conan profile for GitHub Actions Ubuntu runner
+# This profile is used for building HDiffPatch dependency
+
+[settings]
+os=Linux
+arch=x86_64
+compiler=gcc
+compiler.version=11
+build_type=Release
+
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.build:jobs=2

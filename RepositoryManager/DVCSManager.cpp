@@ -2,21 +2,21 @@
 #include <filesystem>
 #include <QDir>
 #include <QDebug>
-#include "VCS/headers/DVCSManager.h"
-#include "UTILS/dirUtils.h"
+#include "DVCSManager.h"
+#include "../UTILS/dirUtils.h"
 
 DVCSManager::DVCSManager(std::string installationPath) {
     this->installationPath = installationPath;
-    this->currentPath = QDir::currentPath();
-    Message startUpStatus = this->checkEnv();
+    this->currentPath = QDir::currentPath().toStdString();
+    UTILS::Message startUpStatus = this->checkEnv();
     if (startUpStatus.getBooleanStatus()==false)
     {
-        qDebug() << startUpStatus.getFormattedMessage();
+        qDebug() << QString::fromStdString(startUpStatus.getFormattedMessage());
     }
 }
 
 
-Message DVCSManager::checkEnv()
+UTILS::Message DVCSManager::checkEnv()
 {
     /*
      * Checks following files in INSTALLATION PATH:
@@ -30,7 +30,7 @@ Message DVCSManager::checkEnv()
         ".vcsLogs.json",
         ".registeredRepos.json"
     };
-    Message envStatus = dirUtils::checkFiles(requiredFiles, this->name, this->installationPath, statusMaps::WARNING);
+    UTILS::Message envStatus = UTILS::dirUtils::checkFiles(requiredFiles, this->name, this->installationPath, UTILS::statusMaps::WARNING);
     // Checking each file
     if (envStatus.getBooleanStatus()==false)
     {

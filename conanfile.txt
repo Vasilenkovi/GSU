@@ -1,0 +1,9 @@
+[requires]
+hdiffpatch/1.0.0
+
+[generators]
+
+[imports]
+., recipes/*
+
+[layout]

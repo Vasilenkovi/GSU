@@ -1,0 +1,55 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Conan
+      run: pip install conan
+
+    - name: Setup Conan profile
+      run: |
+        mkdir -p ~/.conan2/profiles
+        cp .github/conan/profiles/default ~/.conan2/profiles/default
+
+    - name: Install HDiffPatch via Conan
+      run: conan create recipes/hdiffpatch --build=missing --profile=default
+
+    - name: Deploy HDiffPatch to include directory
+      run: |
+        PKG_REF=$(conan list hdiffpatch/1.0.0:* --format=json | python3 -c "import sys, json; p = json.load(sys.stdin)['Local Cache']['hdiffpatch/1.0.0']['revisions']; rev = list(p.keys())[0]; pkg_id = list(p[rev]['packages'].keys())[0]; print(f'hdiffpatch/1.0.0#{rev}:{pkg_id}')")
+        PKG_FOLDER=$(conan cache path "$PKG_REF")
+        mkdir -p include/HDiffPatch
+        cp -r "$PKG_FOLDER"/* include/HDiffPatch/
+
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y qtbase5-dev qt5-qmake build-essential git
+
+    - name: Build UTILS library
+      run: |
+        cd UTILS
+        qmake UTILS.pro
+        make
+
+    - name: Build and run tests
+      run: |
+        cd tests
+        qmake tests.pro
+        make
+        ./test_utils
