@@ -31,17 +31,8 @@ jobs:
 
     - name: Deploy HDiffPatch to include directory
       run: |
-        # Get the latest package reference
-        PKG_REF=$(conan list hdiffpatch/1.0.0:* --format=json | python3 -c "
-import sys, json
-p = json.load(sys.stdin)['Local Cache']['hdiffpatch/1.0.0']['revisions']
-rev = list(p.keys())[0]
-pkg_id = list(p[rev]['packages'].keys())[0]
-print(f'hdiffpatch/1.0.0#{rev}:{pkg_id}')
-")
-        # Get the package folder from Conan cache
+        PKG_REF=$(conan list hdiffpatch/1.0.0:* --format=json | python3 -c "import sys, json; p = json.load(sys.stdin)['Local Cache']['hdiffpatch/1.0.0']['revisions']; rev = list(p.keys())[0]; pkg_id = list(p[rev]['packages'].keys())[0]; print(f'hdiffpatch/1.0.0#{rev}:{pkg_id}')")
         PKG_FOLDER=$(conan cache path "$PKG_REF")
-        # Copy to expected location
         mkdir -p include
         cp -r "$PKG_FOLDER"/* include/HDiffPatch/
 
