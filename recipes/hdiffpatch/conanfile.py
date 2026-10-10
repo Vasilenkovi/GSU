@@ -21,7 +21,7 @@ class HDiffPatchConan(ConanFile):
         git = Git(self)
         git.clone(url="https://github.com/sisong/HDiffPatch.git", target=".")
         # Remove .git directory to avoid conflicts
-        rm(self, os.path.join(self.source_folder, ".git"), recursive=True)
+        rm(self, os.path.join(self.source_folder, ".git"), "*", recursive=True)
 
     def package(self):
         # Copy entire repository preserving directory structure
