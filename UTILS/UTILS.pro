@@ -38,9 +38,12 @@ SOURCES += \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/limit_mem_diff/stream_serialize.cpp \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/match_inplace.cpp \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/suffix_string.cpp \
+    $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/window_diff/covers_range.cpp \
+    $$PWD/../include/HDiffPatch/libHDiffPatch/HDiff/private_diff/window_diff/window_matcher.cpp \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HPatch/patch.c \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HPatch/hpatch_mt/hpatch_mt.c \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HPatch/hpatch_mt/_hcache_old_mt.c \
+    $$PWD/../include/HDiffPatch/libHDiffPatch/HPatch/hpatch_mt/_hcache_window_old_mt.c \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HPatch/hpatch_mt/_hinput_mt.c \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HPatch/hpatch_mt/_houtput_mt.c \
     $$PWD/../include/HDiffPatch/libHDiffPatch/HPatch/hpatch_mt/_hpatch_mt.c \
